@@ -145,6 +145,7 @@ var handleSignedInUser = function(user) {
   } else {
     document.getElementById('photo').style.display = 'none';
   }
+  loadData();
 };
 
 
@@ -201,6 +202,17 @@ function handleConfigChange() {
   ui.start('#firebaseui-container', getUiConfig());
 }
 
+/**
+ * Load some sample data
+ */
+function loadData() {
+  var db = firebase.firestore();
+  db.collection("restaurants").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data().name}`);
+    });
+  });
+}
 
 /**
  * Initializes the app.
